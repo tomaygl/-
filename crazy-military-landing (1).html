@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שוק חג המולד - האקדמיה להכשרת מפקדים</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1a237e, #0d47a1);
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite;
+            color: white;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0,0,0,0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            display: block;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+
+        .info {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            line-height: 1.8;
+        }
+
+        .food-items {
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .guidelines {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .location {
+            margin-top: 2rem;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .contact {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://i.ibb.co/0t0hQzt/image.png" alt="לוגו האקדמיה" class="logo">
+        <h1 style="font-size: 3rem; margin-bottom: 2rem;">🎄 שוק חג המולד! 🎅</h1>
+        <h2 style="margin-bottom: 1rem;">חיילי סגל האקדמיה להכשרת מפקדים מוזמנים ל... 🎉</h2>
+        <div class="info">
+            יום ראשון, 29 בדצמבר! 🌟<br>
+            מ-11:00 עד 13:00<br>
+            סיור טעימות מיוחד בשוק חלפיות!
+        </div>
+        <div class="food-items">
+            🍽️ טעימות ממיטב המאכלים המקומיים<br>
+            ✨ חוויה קולינרית מיוחדת
+        </div>
+        <div class="guidelines">
+            ⭐ הסיור בחזקת בשרי<br>
+            👕 קוד לבוש: אזרחי עפ"י הפקודות
+        </div>
+        <div class="location">
+            מיקום: חניון השוק המקורה 📍<br>
+            Waze: חניון השוק המקורה<br>
+            הגעה עצמאית 🚗
+        </div>
+        <div class="contact">
+            ליצירת קשר:<br>
+            תומר גלובן - 052-8787808 📱
+        </div>
+    </div>
+</body>
+</html>
