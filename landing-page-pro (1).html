@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קורס כניסה לקבע - המכללה הטכנולוגית</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #1a2b3c;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(rgba(0, 32, 96, 0.9), rgba(0, 32, 96, 0.9)), url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        .header-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .header-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #d4af37;
+        }
+
+        .header-subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            padding: 80px 0;
+            background: white;
+            margin: 40px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #002060;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #d4af37;
+        }
+
+        .instructors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .instructor-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .instructor-card img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid #d4af37;
+            object-fit: cover;
+        }
+
+        .instructor-card h3 {
+            font-size: 1.4em;
+            color: #002060;
+            margin-bottom: 10px;
+        }
+
+        .instructor-card p {
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 4px solid #d4af37;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4em;
+            color: #002060;
+            margin: 20px 0;
+        }
+
+        .feature-card p {
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .icon {
+            font-size: 2em;
+            color: #002060;
+            margin-bottom: 15px;
+        }
+
+        .quote-section {
+            background: #002060;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin: 40px 0;
+            border-radius: 8px;
+        }
+
+        .quote-text {
+            font-size: 1.8em;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 4em;
+            position: absolute;
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .quote-text::before {
+            left: 0;
+            top: -20px;
+        }
+
+        .quote-text::after {
+            right: 0;
+            bottom: -60px;
+        }
+
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.5em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+
+            .quote-text {
+                font-size: 1.4em;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content" data-aos="fade-up">
+                <h1 class="header-title">קורס כניסה לקבע</h1>
+                <p class="header-subtitle">מעצבים את דור המפקדים הבא של חיל האוויר</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section" data-aos="fade-up">
+            <h2 class="section-title">תפיסת ההכשרה</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.2em; color: #444;">
+                קורס הכניסה לקבע מתמקד בפיתוח מיומנויות פיקוד והעמקת דמות הנגד המפקד.
+                כאן תרכשו את הכלים להוביל, להנהיג ולהשפיע על עתיד החיל.
+            </p>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2 class="section-title">סגל ההדרכה</h2>
+            <div class="instructors-grid">
+                <div class="instructor-card">
+                    <img src="https://i.ibb.co/mqQsKT5/image.jpg" alt="קרן שטיר אמסלם">
+                    <h3>קרן שטיר אמסלם</h3>
+                    <p>מובילה בתחום פיתוח מנהיגות והעצמה אישית</p>
+                </div>
+                <div class="instructor-card">
+                    <img src="https://i.ibb.co/Yf4qh6j/image.jpg" alt="תומר גלובן">
+                    <h3>תומר גלובן</h3>
+                    <p>מומחה בהקניית כלים פיקודיים ופיתוח מקצועי</p>
+                </div>
+                <div class="instructor-card">
+                    <img src="https://i.ibb.co/M63wDtd/image.jpg" alt="פלג סידי">
+                    <h3>פלג סידי</h3>
+                    <p>מוביל תהליכי הכשרה ופיתוח מנהיגות</p>
+                </div>
+                <div class="instructor-card">
+                    <img src="https://i.ibb.co/mrn1V74/image.jpg" alt="אופיר ריבן">
+                    <h3>אופיר ריבן</h3>
+                    <p>מומחה בניהול זמן ותהליכי עבודה</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2 class="section-title">לוח זמנים</h2>
+            <div style="text-align: center; padding: 40px; max-width: 800px; margin: 0 auto;">
+                <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 30px;">
+                    <h3 style="color: #002060; font-size: 1.6em; margin-bottom: 20px;">מערכת השעות המלאה של הקורס</h3>
+                    <p style="color: #555; margin-bottom: 25px;">כל המפגשים, הפעילויות והאירועים המיוחדים מרוכזים ביומן משותף</p>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=NzgxNjVhMzc2ZTY4MGEzMjNhYTk0ZWNkYjdjMTkyODIyZTk5NWY5ZjUxOWYzM2VmOTkzZDQyYjc1MWMyOTVmNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" 
+                       target="_blank" 
+                       style="display: inline-block; background: #002060; color: white; padding: 15px 40px; border-radius: 4px; text-decoration: none; font-weight: bold; transition: all 0.3s ease;">
+                        צפו ביומן המלא 📅
+                    </a>
+                    <p style="color: #666; font-size: 0.9em; margin-top: 20px;">לחצו על הכפתור להוספת היומן ליומן האישי שלכם</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="quote-section" data-aos="fade-up">
+            <div class="container">
+                <p class="quote-text">
+                    "מנהיגות היא היכולת לתרגם חזון למציאות"
+                </p>
+            </div>
+        </div>
+
+        <section class="section" data-aos="fade-up">
+            <h2 class="section-title">עוד בתכנית</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">🤝</div>
+                    <h3>מפגש עם קפ"ק מבס</h3>
+                    <p>שיחה מעמיקה על אתגרי הפיקוד ופיתוח קריירה צבאית</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🏛️</div>
+                    <h3>סיור בבית הפלמ"ח</h3>
+                    <p>למידה מההיסטוריה הצבאית ומורשת הקרב של לוחמי הפלמ"ח</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🎯</div>
+                    <h3>פעילויות מיוחדות</h3>
+                    <p>תכנים ייחודיים והפתעות לאורך הקורס</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>
