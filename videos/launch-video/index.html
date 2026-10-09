@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="he" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>תומר גלובן — סרטון השקה</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rubik";
+        src: url("assets/fonts/Rubik.ttf") format("truetype");
+        font-weight: 300 900;
+        font-style: normal;
+      }
+      :root {
+        --coral: #e85d5d;
+        --coral-dark: #d44a4a;
+        --cream: #f5f0e8;
+        --cream-dark: #e8e0d4;
+        --ink: #1a1a1a;
+        --gray: #6b6b6b;
+        --white: #ffffff;
+        --hatch: repeating-linear-gradient(45deg, transparent 0 20px, rgba(0, 0, 0, 0.06) 20px 40px);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--cream);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Rubik", sans-serif;
+        color: var(--ink);
+        direction: rtl;
+        background: var(--cream);
+      }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      .region { position: absolute; left: 0; right: 0; overflow: hidden; }
+      .coral { background: var(--coral); }
+      .coral::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--hatch);
+      }
+      .ink-bg { background: var(--ink); }
+      .cream-bg { background: var(--cream); }
+      .pad { position: absolute; left: 90px; right: 90px; }
+      .eyebrow {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        display: block;
+      }
+      .numeral {
+        position: absolute;
+        font-weight: 900;
+        line-height: 0.8;
+        color: rgba(0, 0, 0, 0.12);
+        pointer-events: none;
+      }
+      .accent-line { width: 120px; height: 8px; background: var(--coral); display: block; }
+      .photo-wrap { position: absolute; overflow: hidden; }
+      .photo-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+      h1, h2, h3, p { font-weight: inherit; }
+
+      /* S1 */
+      #s1-photo { top: 0; left: 0; right: 0; height: 1180px; }
+      #s1-photo img { object-position: 44% 38%; }
+      #s1-band { top: 1180px; bottom: 0; }
+      #s1-num { font-size: 560px; left: -30px; bottom: -40px; }
+      #s1-text { top: 1250px; }
+      #s1-title { font-size: 90px; font-weight: 900; line-height: 1.05; margin-top: 22px; }
+      #s1-sub { font-size: 62px; font-weight: 600; line-height: 1.2; margin-top: 26px; }
+
+      /* S2 */
+      #s2-photo { top: 0; left: 0; right: 0; height: 1180px; }
+      #s2-photo img { object-position: 60% 42%; }
+      #s2-text { top: 1270px; }
+      #s2-l1 { font-size: 92px; font-weight: 800; line-height: 1.1; display: block; }
+      #s2-l2 { font-size: 92px; font-weight: 800; line-height: 1.1; color: var(--coral-dark); display: block; }
+      #s2-line { margin-top: 40px; }
+
+      /* S3 */
+      #s3-num { font-size: 760px; color: rgba(245, 240, 232, 0.06); left: -60px; top: 120px; }
+      #s3-text { top: 380px; }
+      #s3-eyebrow { color: var(--coral); }
+      #s3-big { font-size: 230px; font-weight: 900; color: var(--cream); line-height: 1; margin-top: 30px; display: block; }
+      #s3-sub { font-size: 50px; font-weight: 300; color: var(--cream); margin-top: 36px; line-height: 1.4; display: block; }
+      .verb { display: flex; align-items: baseline; gap: 34px; margin-top: 46px; }
+      .verb .n { font-size: 44px; font-weight: 800; color: var(--coral); letter-spacing: 2px; width: 70px; }
+      .verb .w { font-size: 92px; font-weight: 800; color: var(--cream); }
+      #s3-verbs { margin-top: 60px; }
+
+      /* S4 */
+      #s4-band { top: 0; height: 560px; }
+      #s4-num { font-size: 520px; left: -20px; top: 40px; }
+      #s4-head { top: 250px; }
+      #s4-kicker { font-size: 84px; font-weight: 900; line-height: 1.05; margin-top: 18px; display: block; }
+      #s4-card {
+        position: absolute; left: 90px; right: 90px; top: 640px; height: 320px;
+        background: var(--white); border-top: 8px solid var(--coral);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #s4-card img { width: 760px; height: auto; display: block; }
+      #s4-text { top: 1030px; }
+      #s4-t1 { font-size: 46px; font-weight: 400; color: var(--gray); display: block; }
+      #s4-role { font-size: 78px; font-weight: 800; line-height: 1.12; margin-top: 18px; display: block; }
+      #s4-line { margin-top: 34px; }
+      #s4-tags { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; }
+      .tag {
+        font-size: 38px; font-weight: 600; padding: 14px 26px;
+        background: var(--white); border-right: 6px solid var(--coral); display: block;
+      }
+
+      /* S5 */
+      #s5-num { font-size: 600px; left: -30px; top: 60px; }
+      #s5-head { top: 230px; }
+      #s5-title { font-size: 112px; font-weight: 900; line-height: 1.02; margin-top: 20px; display: block; }
+      #s5-sub { font-size: 44px; font-weight: 400; margin-top: 26px; display: block; line-height: 1.35; }
+      #s5-cards { top: 820px; display: flex; flex-direction: column; gap: 30px; }
+      .card {
+        background: var(--white); border-top: 8px solid var(--ink);
+        padding: 34px 40px; display: flex; align-items: center; gap: 34px;
+      }
+      .card .icon {
+        width: 96px; height: 96px; background: var(--coral); color: var(--white);
+        font-size: 54px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex: none;
+      }
+      .card .ct { font-size: 62px; font-weight: 800; line-height: 1.1; display: block; }
+      .card .cb { font-size: 34px; font-weight: 400; color: var(--gray); margin-top: 8px; display: block; }
+
+      /* S6 */
+      #s6-top { top: 0; height: 700px; }
+      #s6-mark { font-size: 720px; color: rgba(0, 0, 0, 0.35); right: 60px; top: 70px; }
+      #s6-eyebrow-wrap { top: 560px; }
+      #s6-bottom { top: 700px; bottom: 0; }
+      #s6-text { top: 830px; }
+      #s6-big { font-size: 118px; font-weight: 900; color: var(--cream); line-height: 1.02; display: block; }
+      #s6-body { font-size: 48px; font-weight: 300; color: var(--cream); line-height: 1.45; margin-top: 40px; display: block; }
+      #s6-line { margin-top: 56px; }
+      #s6-one { font-size: 60px; font-weight: 700; color: var(--cream); line-height: 1.2; margin-top: 40px; display: block; }
+      #s6-one2 { font-size: 44px; font-weight: 400; color: var(--coral); margin-top: 16px; display: block; }
+
+      /* S7 */
+      #s7-avatar {
+        position: absolute; width: 380px; height: 380px; border-radius: 50%; overflow: hidden;
+        left: 350px; top: 170px; border: 10px solid var(--white);
+      }
+      #s7-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%; transform: scale(1.9); transform-origin: 62% 46%; }
+      #s7-center { position: absolute; left: 90px; right: 90px; top: 610px; text-align: center; }
+      #s7-mono { width: 150px; height: 150px; display: block; margin: 0 auto; }
+      #s7-name { font-size: 120px; font-weight: 900; line-height: 1; margin-top: 20px; display: block; }
+      #s7-line { margin: 34px auto 0; }
+      #s7-slogan { font-size: 66px; font-weight: 700; color: var(--coral-dark); margin-top: 30px; display: block; }
+      #s7-services { font-size: 38px; font-weight: 500; color: var(--gray); margin-top: 40px; display: block; line-height: 1.5; }
+      #s7-band { top: 1340px; bottom: 0; }
+      #s7-band-text { position: absolute; left: 90px; right: 90px; top: 1410px; text-align: center; }
+      #s7-cta { font-size: 64px; font-weight: 900; display: block; }
+      #s7-phone { font-size: 70px; font-weight: 800; letter-spacing: 3px; margin-top: 14px; display: block; direction: ltr; }
+
+      /* Wiper — hard-edge coral plane between scenes */
+      #wiper-layer { position: absolute; inset: 0; pointer-events: none; z-index: 50; }
+      #wiper { position: absolute; left: 0; right: 0; top: 0; height: 1920px; background: var(--coral); }
+      #wiper::before { content: ""; position: absolute; inset: 0; background-image: var(--hatch); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="48"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- S1 · 0–6.5 · Region-split cover: uniform -->
+      <section id="s1" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <div id="s1-photo" class="photo-wrap"><img id="s1-img" src="assets/tomer-uniform.jpg" alt="" /></div>
+        <div id="s1-band" class="region coral">
+          <div id="s1-num" class="numeral" aria-hidden="true" data-layout-allow-overflow>30</div>
+        </div>
+        <div id="s1-text" class="pad">
+          <span id="s1-eyebrow" class="eyebrow">פרק ב׳ · 30 שנות שירות</span>
+          <div id="s1-title">אחרי 30 שנה בצה״ל</div>
+          <div id="s1-sub">הגיע הזמן להחליף מדים.</div>
+        </div>
+      </section>
+
+      <!-- S2 · 6.5–12 · civilian -->
+      <section id="s2" class="clip cream-bg" data-start="6.5" data-duration="5.5" data-track-index="0">
+        <div id="s2-photo" class="photo-wrap"><img id="s2-img" src="assets/tomer-civilian.jpg" alt="" /></div>
+        <div id="s2-text" class="pad">
+          <span id="s2-l1">אבל יש דברים</span>
+          <span id="s2-l2">שממשיכים איתי.</span>
+          <span id="s2-line" class="accent-line"></span>
+        </div>
+      </section>
+
+      <!-- S3 · 12–18 · people -->
+      <section id="s3" class="clip ink-bg" data-start="12" data-duration="6" data-track-index="0">
+        <div id="s3-num" class="numeral" aria-hidden="true" data-layout-allow-overflow>30</div>
+        <div id="s3-text" class="pad">
+          <span id="s3-eyebrow" class="eyebrow">כל השנים עסקתי ב־</span>
+          <span id="s3-big">אנשים.</span>
+          <div id="s3-verbs">
+            <div class="verb"><span class="n">01</span><span class="w">להכשיר</span></div>
+            <div class="verb"><span class="n">02</span><span class="w">לפתח</span></div>
+            <div class="verb"><span class="n">03</span><span class="w">להוביל</span></div>
+          </div>
+          <span id="s3-sub">ועכשיו — ממשיך את העשייה הזאת באזרחות.</span>
+        </div>
+      </section>
+
+      <!-- S4 · 18–26 · Globen Insurance -->
+      <section id="s4" class="clip cream-bg" data-start="18" data-duration="8" data-track-index="0">
+        <div id="s4-band" class="region coral">
+          <div id="s4-num" class="numeral" aria-hidden="true" data-layout-allow-overflow>01</div>
+        </div>
+        <div id="s4-head" class="pad">
+          <span class="eyebrow">העוגן המרכזי</span>
+          <span id="s4-kicker">מצטרף לעסק המשפחתי</span>
+        </div>
+        <div id="s4-card"><img id="s4-logo" src="assets/globen-logo.png" alt="גלובן ביטוחים" /></div>
+        <div id="s4-text" class="pad">
+          <span id="s4-t1">סוכנות הביטוח המשפחתית שלנו</span>
+          <span id="s4-role">מנהל פיתוח עסקי וארגוני</span>
+          <span id="s4-line" class="accent-line"></span>
+          <div id="s4-tags">
+            <span class="tag">שירות</span>
+            <span class="tag">תהליכי עבודה</span>
+            <span class="tag">AI מעשי</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- S5 · 26–34 · lectures & workshops -->
+      <section id="s5" class="clip coral" data-start="26" data-duration="8" data-track-index="0">
+        <div id="s5-num" class="numeral" aria-hidden="true" data-layout-allow-overflow>02</div>
+        <div id="s5-head" class="pad">
+          <span class="eyebrow">ובמקביל</span>
+          <span id="s5-title">הרצאות וסדנאות</span>
+          <span id="s5-sub">ממשיך לעשות את מה שאני אוהב: לעבוד עם אנשים.</span>
+        </div>
+        <div id="s5-cards" class="pad">
+          <div class="card"><span class="icon">1</span><div><span class="ct">ניהול ומנהיגות</span><span class="cb">פיתוח מנהלים והובלת צוותים</span></div></div>
+          <div class="card"><span class="icon">2</span><div><span class="ct">תקשורת ועמידה מול קהל</span><span class="cb">מסר, פרזנטציה והשפעה</span></div></div>
+          <div class="card"><span class="icon">3</span><div><span class="ct">AI פרקטי</span><span class="cb">בינה מלאכותית שמשתמשים בה בפועל</span></div></div>
+        </div>
+      </section>
+
+      <!-- S6 · 34–40.5 · from task to output -->
+      <section id="s6" class="clip ink-bg" data-start="34" data-duration="6.5" data-track-index="0">
+        <div id="s6-top" class="region coral">
+          <div id="s6-mark" class="numeral" aria-hidden="true" data-layout-allow-overflow>AI</div>
+        </div>
+        <div id="s6-eyebrow-wrap" class="pad"><span class="eyebrow">בסדנאות שלי</span></div>
+        <div id="s6-bottom" class="region ink-bg"></div>
+        <div id="s6-text" class="pad">
+          <span id="s6-big">מהמשימה לתוצר.</span>
+          <span id="s6-body">מכינים מצגת, בונים כלי שחוסך זמן, ויוצאים עם משהו שעובד.</span>
+          <span id="s6-line" class="accent-line"></span>
+          <span id="s6-one">ואפשר גם אחד על אחד.</span>
+          <span id="s6-one2">בקצב שלכם. על המשימות שלכם.</span>
+        </div>
+      </section>
+
+      <!-- S7 · 40.5–48 · closing plate -->
+      <section id="s7" class="clip cream-bg" data-start="40.5" data-duration="7.5" data-track-index="0">
+        <div id="s7-avatar" data-layout-allow-overflow><img src="assets/tomer-civilian.jpg" alt="" /></div>
+        <div id="s7-center">
+          <img id="s7-mono" src="assets/logo_monogram.png" alt="TG" />
+          <span id="s7-name">תומר גלובן</span>
+          <span id="s7-line" class="accent-line"></span>
+          <span id="s7-slogan">לא רק לדעת. לבצע.</span>
+          <span id="s7-services">ביטוח ופנסיה · הרצאות וסדנאות · לימוד AI אישי</span>
+        </div>
+        <div id="s7-band" class="region coral"></div>
+        <div id="s7-band-text">
+          <span id="s7-cta">דברו איתי</span>
+          <span id="s7-phone">052-8787808</span>
+        </div>
+      </section>
+
+      <!-- wiper layer -->
+      <div id="wiper-layer" class="clip" data-start="0" data-duration="48" data-track-index="1">
+        <div id="wiper"></div>
+      </div>
+
+      <audio id="music" src="assets/music.mp3" data-start="0" data-duration="48" data-volume="0.8"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const E = "power3.out";
+
+      // Wiper starts parked below the frame.
+      tl.set("#wiper", { yPercent: 100 }, 0);
+      // Hard-edge wipe: plane rises to cover, cut happens under it, plane exits upward.
+      function wipe(cut) {
+        tl.fromTo("#wiper", { yPercent: 100 }, { yPercent: 0, duration: 0.38, ease: "power3.in" }, cut - 0.38);
+        tl.fromTo("#wiper", { yPercent: 0 }, { yPercent: -100, duration: 0.42, ease: "power3.out", immediateRender: false }, cut + 0.04);
+      }
+      [6.5, 12, 18, 26, 34, 40.5].forEach(wipe);
+
+      // S1
+      tl.fromTo("#s1-img", { scale: 1.12 }, { scale: 1.0, duration: 6.5, ease: "none" }, 0);
+      tl.fromTo("#s1-band", { yPercent: 100 }, { yPercent: 0, duration: 0.7, ease: "power4.out" }, 0.1);
+      tl.fromTo("#s1-num", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: E }, 0.4);
+      tl.fromTo("#s1-eyebrow", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 0.6);
+      tl.fromTo("#s1-title", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: E }, 0.8);
+      tl.fromTo("#s1-sub", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 2.6);
+
+      // S2
+      tl.fromTo("#s2-img", { scale: 1.0 }, { scale: 1.1, duration: 5.5, ease: "none" }, 6.5);
+      tl.fromTo("#s2-l1", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 7.1);
+      tl.fromTo("#s2-l2", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 7.7);
+      tl.fromTo("#s2-line", { scaleX: 0 }, { scaleX: 1, transformOrigin: "100% 50%", duration: 0.6, ease: E }, 8.4);
+
+      // S3
+      tl.fromTo("#s3-num", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, ease: E }, 12.1);
+      tl.fromTo("#s3-eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 12.4);
+      tl.fromTo("#s3-big", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: E }, 12.7);
+      tl.fromTo("#s3-verbs .verb", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: E, stagger: 0.45 }, 13.6);
+      tl.fromTo("#s3-sub", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 15.4);
+
+      // S4
+      tl.fromTo("#s4-num", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: E }, 18.1);
+      tl.fromTo("#s4-head > *", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: E, stagger: 0.2 }, 18.3);
+      tl.fromTo("#s4-card", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: E }, 18.9);
+      tl.fromTo("#s4-logo", { scale: 0.9 }, { scale: 1, duration: 1.4, ease: E }, 18.9);
+      tl.fromTo("#s4-t1", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 19.9);
+      tl.fromTo("#s4-role", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 20.3);
+      tl.fromTo("#s4-line", { scaleX: 0 }, { scaleX: 1, transformOrigin: "100% 50%", duration: 0.5, ease: E }, 20.9);
+      tl.fromTo("#s4-tags .tag", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: E, stagger: 0.3 }, 21.5);
+
+      // S5
+      tl.fromTo("#s5-num", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: E }, 26.1);
+      tl.fromTo("#s5-head > *", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: E, stagger: 0.25 }, 26.3);
+      tl.fromTo("#s5-cards .card", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E, stagger: 0.6 }, 27.6);
+
+      // S6
+      tl.fromTo("#s6-mark", { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: E }, 34.1);
+      tl.fromTo("#s6-eyebrow-wrap", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 34.3);
+      tl.fromTo("#s6-big", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 34.6);
+      tl.fromTo("#s6-body", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 35.4);
+      tl.fromTo("#s6-line", { scaleX: 0 }, { scaleX: 1, transformOrigin: "100% 50%", duration: 0.5, ease: E }, 36.8);
+      tl.fromTo("#s6-one", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: E }, 37.2);
+      tl.fromTo("#s6-one2", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 37.8);
+
+      // S7
+      tl.fromTo("#s7-avatar", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.6)" }, 40.9);
+      tl.fromTo("#s7-mono", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 41.3);
+      tl.fromTo("#s7-name", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 41.5);
+      tl.fromTo("#s7-line", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: E }, 42.0);
+      tl.fromTo("#s7-slogan", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 42.3);
+      tl.fromTo("#s7-services", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 42.9);
+      tl.fromTo("#s7-band", { yPercent: 100 }, { yPercent: 0, duration: 0.6, ease: "power4.out" }, 43.3);
+      tl.fromTo("#s7-band-text > *", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E, stagger: 0.2 }, 43.7);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
