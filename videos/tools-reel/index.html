@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="he" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>שלושת הכלים — ריל</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rubik";
+        src: url("assets/fonts/Rubik.ttf") format("truetype");
+        font-weight: 300 900;
+        font-style: normal;
+      }
+      :root {
+        --coral: #e85d5d;
+        --coral-dark: #d44a4a;
+        --cream: #f5f0e8;
+        --cream-dark: #e8e0d4;
+        --ink: #1a1a1a;
+        --blue: #1d3557;
+        --gray: #6b6b6b;
+        --hatch: repeating-linear-gradient(45deg, transparent 0 18px, rgba(0, 0, 0, 0.07) 18px 36px);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--cream); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        font-family: "Rubik", sans-serif; color: var(--ink); background: var(--cream);
+      }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      #stage { position: absolute; inset: 0; }
+
+      /* corner geometry */
+      .shape { position: absolute; }
+      #g-circle { width: 360px; height: 360px; border-radius: 50%; border: 14px solid var(--coral); top: -120px; left: -120px; opacity: 0.35; }
+      #g-square { width: 240px; height: 240px; background: var(--coral); top: 120px; right: -90px; opacity: 0.22; overflow: hidden; }
+      #g-square::before { content: ""; position: absolute; inset: 0; background-image: var(--hatch); }
+      #g-tri {
+        width: 0; height: 0; border-left: 170px solid transparent; border-right: 170px solid transparent;
+        border-bottom: 290px solid var(--blue); bottom: -60px; left: -70px; opacity: 0.12;
+      }
+      #g-ring { width: 300px; height: 300px; border-radius: 50%; border: 10px solid var(--ink); bottom: -110px; right: -100px; opacity: 0.12; }
+      #g-dots {
+        width: 220px; height: 220px; bottom: 260px; right: 40px; opacity: 0.25;
+        background-image: radial-gradient(var(--ink) 4px, transparent 5px); background-size: 44px 44px;
+      }
+      #g-bar { width: 200px; height: 18px; background: var(--ink); top: 330px; left: -40px; opacity: 0.12; }
+
+      /* title */
+      #title {
+        position: absolute; left: 90px; right: 90px; top: 300px;
+        direction: rtl; text-align: right; font-weight: 900; font-size: 112px; line-height: 1.08;
+      }
+      #title .row { display: block; white-space: pre; }
+      #title .ch { display: none; }
+      #title .row { min-height: 121px; }
+      #title .hl { color: var(--coral-dark); }
+      .cursor { display: inline-block; opacity: 0; width: 10px; height: 104px; background: var(--coral); vertical-align: -12px; margin-right: 8px; }
+      #rule { position: absolute; right: 90px; top: 590px; width: 140px; height: 10px; background: var(--ink); }
+
+      /* tool lines */
+      .line {
+        position: absolute; left: 90px; right: 90px; direction: rtl;
+        display: flex; align-items: center; gap: 36px;
+      }
+      .line .chip {
+        width: 128px; height: 128px; flex: none; display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 70px; font-weight: 800;
+      }
+      .line .name { font-size: 84px; font-weight: 800; line-height: 1; display: block; direction: ltr; text-align: right; }
+      .line .desc { font-size: 44px; font-weight: 500; line-height: 1.25; margin-top: 12px; display: block; }
+      #l1 { top: 770px; color: var(--coral-dark); }
+      #l1 .chip { background: var(--coral-dark); }
+      #l2 { top: 1040px; color: var(--ink); }
+      #l2 .chip { background: var(--ink); }
+      #l3 { top: 1310px; color: var(--blue); }
+      #l3 .chip { background: var(--blue); }
+
+      /* end card */
+      #end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #end-logo { width: 380px; height: 380px; display: block; }
+      #end-name { font-size: 104px; font-weight: 900; margin-top: 30px; direction: rtl; display: block; }
+      #end-line { width: 140px; height: 10px; background: var(--coral); margin-top: 30px; display: block; }
+      #end-slogan { font-size: 60px; font-weight: 700; color: var(--coral-dark); margin-top: 28px; direction: rtl; display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <div id="scene" class="clip" data-start="0" data-duration="20" data-track-index="0">
+        <div id="stage">
+          <div id="g-circle" class="shape" aria-hidden="true"></div>
+          <div id="g-square" class="shape" aria-hidden="true"></div>
+          <div id="g-bar" class="shape" aria-hidden="true"></div>
+          <div id="g-tri" class="shape" aria-hidden="true"></div>
+          <div id="g-ring" class="shape" aria-hidden="true"></div>
+          <div id="g-dots" class="shape" aria-hidden="true"></div>
+
+          <div id="content">
+            <div id="title">
+              <span class="row" id="row1" data-text="שלושת הכלים"></span>
+              <span class="row" id="row2" data-text="שיחסכו לכם שעות" data-hl="שעות"></span>
+            </div>
+            <div id="rule"></div>
+
+            <div class="line" id="l1">
+              <span class="chip">1</span>
+              <div><span class="name">Claude</span><span class="desc">כותב, מסכם ומנתח בשבילכם</span></div>
+            </div>
+            <div class="line" id="l2">
+              <span class="chip">2</span>
+              <div><span class="name">Gamma</span><span class="desc">מצגת מלאה תוך כמה דקות</span></div>
+            </div>
+            <div class="line" id="l3">
+              <span class="chip">3</span>
+              <div><span class="name">NotebookLM</span><span class="desc">שואלים שאלות על המסמכים שלכם</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="end">
+          <img id="end-logo" src="assets/logo_monogram.png" alt="TG" />
+          <span id="end-name">תומר גלובן</span>
+          <span id="end-line"></span>
+          <span id="end-slogan">לא רק לדעת. לבצע.</span>
+        </div>
+      </div>
+      <audio id="music" src="assets/music.mp3" data-start="0" data-duration="20" data-volume="0.8"></audio>
+    </div>
+
+    <script>
+      // Build per-letter spans (Hebrew letters don't join, so spans are safe).
+      const chars = [];
+      document.querySelectorAll("#title .row").forEach((row) => {
+        const text = row.dataset.text;
+        const hl = row.dataset.hl;
+        const hlStart = hl ? text.indexOf(hl) : -1;
+        row._chars = [];
+        [...text].forEach((c, i) => {
+          const s = document.createElement("span");
+          s.className = "ch" + (hlStart >= 0 && i >= hlStart ? " hl" : "");
+          s.textContent = c;
+          row.appendChild(s);
+          chars.push(s);
+          row._chars.push(s);
+        });
+        const cur = document.createElement("span");
+        cur.className = "cursor";
+        row.appendChild(cur);
+      });
+      const rows = [...document.querySelectorAll("#title .row")];
+      const tl = gsap.timeline({ paused: true });
+      const E = "power3.out";
+
+      // Slow corner drift (whole 20s)
+      tl.fromTo("#g-circle", { x: 0, y: 0, rotation: 0 }, { x: 40, y: 30, rotation: 20, duration: 20, ease: "sine.inOut" }, 0);
+      tl.fromTo("#g-square", { x: 0, y: 0, rotation: 8 }, { x: -30, y: 40, rotation: 30, duration: 20, ease: "sine.inOut" }, 0);
+      tl.fromTo("#g-bar", { x: 0 }, { x: 60, duration: 20, ease: "sine.inOut" }, 0);
+      tl.fromTo("#g-tri", { x: 0, y: 0, rotation: -6 }, { x: 30, y: -30, rotation: 10, duration: 20, ease: "sine.inOut" }, 0);
+      tl.fromTo("#g-ring", { x: 0, y: 0 }, { x: -40, y: -30, duration: 20, ease: "sine.inOut" }, 0);
+      tl.fromTo("#g-dots", { y: 0, opacity: 0.25 }, { y: -50, opacity: 0.18, duration: 20, ease: "sine.inOut" }, 0);
+      tl.fromTo(".shape", { scale: 0.6 }, { scale: 1, duration: 1.2, ease: "back.out(1.5)", stagger: 0.08 }, 0);
+
+      // Typewriter: letter by letter
+      const typeStart = 0.7, step = 0.1;
+      chars.forEach((c, i) => tl.set(c, { display: "inline" }, typeStart + i * step));
+      const typeEnd = typeStart + chars.length * step;
+      const row1End = typeStart + rows[0]._chars.length * step;
+      const cur1 = rows[0].querySelector(".cursor"), cur2 = rows[1].querySelector(".cursor");
+      tl.set(cur1, { opacity: 1 }, typeStart - 0.05);
+      tl.set(cur1, { opacity: 0 }, row1End);
+      tl.set(cur2, { opacity: 1 }, row1End);
+      tl.fromTo(cur2, { opacity: 1 }, { opacity: 0, duration: 0.25, repeat: 7, yoyo: true, ease: "steps(1)", immediateRender: false }, typeEnd);
+      tl.set(cur2, { opacity: 0 }, typeEnd + 2.0);
+      tl.fromTo("#rule", { scaleX: 0 }, { scaleX: 1, transformOrigin: "100% 50%", duration: 0.5, ease: E }, typeEnd + 0.1);
+
+      // Three lines rise one after another
+      [["#l1", typeEnd + 0.8], ["#l2", typeEnd + 2.6], ["#l3", typeEnd + 4.4]].forEach(([sel, t]) => {
+        tl.fromTo(sel, { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, t);
+        tl.fromTo(sel + " .chip", { scale: 0.4, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(2)" }, t + 0.1);
+      });
+
+      // Ending: small zoom-out, content steps back, logo appears in the center
+      tl.fromTo("#stage", { scale: 1 }, { scale: 0.86, duration: 1.6, ease: "power2.inOut" }, 15.0);
+      tl.fromTo("#content", { opacity: 1 }, { opacity: 0, duration: 0.6, ease: "power1.in" }, 15.9);
+      tl.fromTo("#end-logo", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)" }, 16.3);
+      tl.fromTo("#end-name", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 16.8);
+      tl.fromTo("#end-line", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: E }, 17.2);
+      tl.fromTo("#end-slogan", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 17.4);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
